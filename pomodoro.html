@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<head>
+   <title>pomodoro clock</title>
+    <style>
+        .container{
+            display:grid;
+            height: 100vh;
+           grid-template-rows:1fr 3fr 1fr 2fr 1fr 2fr 0fr 2fr ;
+           grid-template-areas: "div1"
+              "div2" 
+              "div3" 
+              " div4" 
+              "div5" 
+              "div5" 
+              "div6 "  
+              "div7"
+              "div8";
+            color:azure;
+            background-color: black;
+            text-align: center;
+
+        }
+        .colo1{
+            display: flex;
+            background-color:black;
+        }
+       .size2{
+        font-size: 80px;
+       }
+       .count{
+              color: black;
+       }
+        .one{
+            background-color:blue;
+            padding: 5px;
+            margin: 2px;
+            color:white;
+            flex-grow: 1;
+            font-size: 30px;
+            padding: 25px;
+        }
+        .two{
+            background-color:gray;
+            padding: 5px;
+            margin: 2px;
+            color:azure;
+            flex-grow: 2;
+            font-size: 30px;
+            padding: 25px;
+        }
+        .three{
+            background-color: blue;
+            padding: 5px;
+            margin: 2px;
+            color:azure;
+            flex-grow: 1;
+            font-size: 30px;
+            padding: 25px;
+        }
+        .title{
+            font-size: 10px;
+            color:azure;
+            
+        }
+        .timer{
+            font-size: 72px;
+            color:black;
+
+        }
+        .button-wrapper{
+            display: flex;
+            background-color: black;
+            cursor: pointer;
+        }
+        #start{
+            background-color:greenyellow;
+        }
+        #stop{
+            background-color:red;
+        }
+        #reset{
+            background-color:orange;
+        }
+
+    </style>
+</head>
+<body>
+        <div class="container">
+         <div> 
+            <h1 class="title" id="detail">SESSION<h1>
+         </div>
+         <div class="size2">
+            <span   id="timer">25</span>
+            <span  id="space">:</span>
+            <span  id="clock">00</span>
+        </div>
+        <div class="title" >SESSION LENGTH</div>
+        <div class="colo1">
+            <button class="one" onclick="setTimer()">+</button>
+            <span  class="two" id="valuedisplay">25</span>
+            <button class="three" onclick="setTimermin()">-</button>
+        </div>
+         <div>  
+             <h1 class="title">BREAK LENGTH</h1>
+        </div>
+        <div class="colo1">
+            <button class="one" onclick="setbre()">+</button>
+            <span class="two" id="breakdisplay">5</span>
+            <button class="three" onclick="setbremin()">-</button>
+        </div>
+        <div  class="count" id="timerc">0</div>
+            <div class="button-wrapper">
+              <button class="one" id="start">start</button>
+              <button class="two" id="stop">stop</button>
+                <button class="three" id="reset">Reset</button>
+            </div>
+        </div>
+        <script>
+            const starte1=document.getElementById("start")
+            const stope1=document.getElementById("stop")
+            const resete1=document.getElementById("reset")
+            const timere1= document.getElementById("timer")
+            const clocke1= document.getElementById("clock")
+            const timerce1= document.getElementById("timerc")
+            const detaile1= document.getElementById("detail")
+
+            let count=25;
+            let  valuedisplay = document.getElementById("valuedisplay") 
+           console.log(valuedisplay.textContent);
+           function setTimer(){
+                           count++;
+                        valuedisplay.innerHTML=count;
+            let interval;
+            let timeLeft=valuedisplay.textContent*60;
+            console.log(valuedisplay.textContent);
+                if(valuedisplay.textContent>25)
+                {    
+                   
+                    let minutes=Math.floor(timeLeft/60);
+                    let formattedTime=`${minutes.toString().padStart(2,"0") }`;
+                    timere1.innerHTML =formattedTime;
+                    let seconds=minutes*60%minutes;
+                    let name=`${seconds.toString().padStart(2,"0")}`;
+                    clocke1.innerHTML=name;
+                    console.log(clocke1.textContent);
+                    
+                 }
+                } 
+                count=25;
+                console.log(valuedisplay.textContent);
+                function setTimermin(){
+                count--;
+                valuedisplay.innerHTML=count;
+                let interval;
+                let timeLeft=valuedisplay.textContent*60;
+                console.log(valuedisplay.textContent);
+                if(valuedisplay.textContent<25)
+                {    
+                   
+                    let minutes=Math.floor(timeLeft/60);
+                    let formattedTime=`${minutes.toString().padStart(2,"0") }`;
+                    timere1.innerHTML =formattedTime;
+                    let seconds=minutes*60%minutes;
+                    let name=`${seconds.toString().padStart(2,"0")}`;
+                    clocke1.innerHTML=name;
+                    console.log(clocke1.textContent);
+                    
+                 }
+                }
+
+            let rest=5;
+            let  breakdisplay = document.getElementById("breakdisplay") 
+           console.log(breakdisplay.textContent);
+           function setbre(){
+                               rest++;
+                               breakdisplay.innerHTML=rest;
+                               let interval;
+                              let timeLeft=breakdisplay.textContent*60;
+                               console.log(breakdisplay.textContent);
+                    
+                } 
+                rest=5;
+                console.log(breakdisplay.textContent);
+                function setbremin(){
+                 rest--;
+                breakdisplay.innerHTML=rest;
+                let interval;
+                let timeLeft=breakdisplay.textContent*60;
+                console.log(breakdisplay.textContent);
+               
+                }   
+        function startTimer(){
+            interval = setInterval(function(){
+                clocke1.innerHTML= parseInt(clocke1.innerHTML)-1;
+                if(clocke1.innerHTML<1){
+                    timere1.innerHTML= parseInt(timere1.innerHTML)-1;
+                    clocke1.innerHTML= parseInt(clocke1.innerHTML)+60;
+
+                    if(timere1.innerHTML<0){
+                        alert("time up")
+                        timere1.innerHTML=breakdisplay.innerHTML;
+                        timerce1.innerHTML= parseInt(timerce1.innerHTML)+1;
+                    if(timerce1.innerHTML%2==0)
+                        timere1.innerHTML=valuedisplay.innerHTML;
+                        clocke1.innerHTML=0;  
+                    }        
+                } 
+                },1000);
+
+            }  
+         function stopTimer(){
+                clearInterval(interval);
+           }
+            function resetTimer(){
+                clearInterval(interval);
+                timere1.innerHTML=25;
+                        clocke1.innerHTML=0;
+                        startTimer();
+
+            }
+
+      
+            starte1.addEventListener("click", startTimer);
+            stope1.addEventListener("click", stopTimer);
+            resete1.addEventListener("click", resetTimer);
+
+
+        </script>
+    </body>
+</html>
